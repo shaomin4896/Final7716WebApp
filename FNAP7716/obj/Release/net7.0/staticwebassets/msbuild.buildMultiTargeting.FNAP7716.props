@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/FNAP7716.props" />
+</Project>
