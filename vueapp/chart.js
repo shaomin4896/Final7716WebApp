@@ -1,26 +1,32 @@
 var barChart, pieChart;
 
-function drawBarChart() {
+function generateRandomColor() {
+    // 生成隨機的 R, G, B 值
+    var r = Math.floor(Math.random() * 256);
+    var g = Math.floor(Math.random() * 256);
+    var b = Math.floor(Math.random() * 256);
+
+    // 轉換為 HEX 格式
+    // var hexColor = '#' + r.toString(16).padStart(2, '0') +
+    //                         g.toString(16).padStart(2, '0') +
+    //                         b.toString(16).padStart(2, '0');
+    return `rgba(${r}, ${g}, ${b}, 0.2)`;
+}
+
+function drawBarChart(dataWithLabel = {}) {
     setupCtxModal(true);
     clearChart();
     var barCtx = document.getElementById('chart').getContext('2d');
+    var randomColors = Object.keys(dataWithLabel).map(generateRandomColor);
     barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
-            labels: ['Label 1', 'Label 2', 'Label 3'],
+            labels: Object.keys(dataWithLabel),
             datasets: [{
-                label: 'Sample Data',
-                data: [12, 19, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                ],
+                label: 'emotion',
+                data: Object.values(dataWithLabel),
+                backgroundColor: randomColors,
+                borderColor: randomColors.map(color => color.replace(/0\.2\)/, '1)')),
                 borderWidth: 1
             }]
         },
@@ -32,34 +38,28 @@ function drawBarChart() {
             }
         }
     });
-    console.log(new Date().toLocaleDateString());
 }
 
-function drawPieChart() {
+function drawPieChart(dataWithLabel = {}) {
     setupCtxModal(false);
     clearChart();
     var pieCtx = document.getElementById('chart').getContext('2d');
+    var randomColors = Object.keys(dataWithLabel).map(generateRandomColor);
+
     pieChart = new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: ['Label A', 'Label B', 'Label C'],
+            labels: Object.keys(dataWithLabel),
             datasets: [{
-                data: [30, 50, 20],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                ],
+                data: Object.values(dataWithLabel),
+                backgroundColor: randomColors.map(color => color.replace(/0\.2\)/, '0.4)')),
+                borderColor: randomColors.map(color => color.replace(/0\.2\)/, '0.6)')),
                 borderWidth: 1
             }]
         }
     });
 }
+
 
 function clearChart() {
     barChart?.destroy();
@@ -70,7 +70,7 @@ function setupCtxModal(isLarge = false) {
     const modaldialog = document.getElementById('analysis-modal-dialog');
     if (isLarge)
         modaldialog.classList.add("modal-lg");
-    else   
+    else
         modaldialog.classList.remove("modal-lg");
 }
 

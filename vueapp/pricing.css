@@ -36,9 +36,16 @@ body {
 /* Customize the appearance of the card header on hover */
 .card:hover .card-header {
   /* Commented out the original background and color change */
-  /* background-color: #007bff;
+   /*background-color: #007bff;
   color: #fff; */
 
   /* Remove text shadow and keep the cool shadow effect on hover */
   text-shadow: none;
+}
+
+#appheader{
+    font-size: 72px;
+    background: -webkit-linear-gradient(#007bff, #89c2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

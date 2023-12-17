@@ -10,13 +10,21 @@ const App = {
             message: "messagggggeeee",
             time: "timestring",
         });
+        const emotionCount = computed(()=> {
+            let emotionCount = employees.value.reduce((acc, employee) => {
+                const { emotion } = employee;
+                acc[emotion] = (acc[emotion] || 0) + 1;
+                return acc;
+            }, {});
+            return emotionCount;
+        })
 
         const events = ref({
             barchart: async function () {
-                drawBarChart();
+                drawBarChart(emotionCount.value);
             },
             piechart: async function () {
-                drawPieChart();
+                drawPieChart(emotionCount.value);
             }
         });
 
